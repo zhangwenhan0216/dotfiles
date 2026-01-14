@@ -268,9 +268,16 @@
   (global-git-gutter-mode +1))
 
 ;; linux 环境下使用，需要安装cmake
-;; (use-package vterm
-;;   :ensure t
-;;   :bind ("C-c t" . vterm))
+;; windows 环境下使用需要
+;; 1. 安装 MSYS2 安装地址： https://www.msys2.org/
+;; 2. 安装编译工具
+;; pacman -S mingw-w64-ucrt-x86_64-gcc \
+;;          mingw-w64-ucrt-x86_64-cmake \
+;;          mingw-w64-ucrt-x86_64-libvterm \
+;;          mingw-w64-ucrt-x86_64-toolchain
+(use-package vterm
+  :ensure t
+  :bind ("C-c t" . vterm))
 
 (provide 'init-third-packages)
 

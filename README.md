@@ -64,13 +64,13 @@ As treesit is added as built-in package, some programming mode now is managed by
 | **benchmark-init** | 启动性能分析，优化启动速度 | - |
 | **exec-path-from-shell** | 环境变量同步（macOS/Linux） | - |
 
-# Installation
+## quick kbd
 
-1. Just run the code below:
-
-```bash
-git clone https://github.com/cabins/emacs.d ~/.emacs.d
-```
-
-2. Launch Emacs, and wait the package installation.
-3. Enjoy the life.
+| 功能     | 快捷键          | 对应命令               |
+|----------|-----------------|------------------------|
+| 放大     | `C-x C-+` 或 `C-x C-=` | `text-scale-increase` |
+| 缩小     | `C-x C--`       | `text-scale-decrease`  |
+| 重置     | `C-x C-0`       | `text-scale-adjust` (参数 0) |
+| 全局放大 | `C-x C-M-+` 或 `C-x C-M-=` | `global-text-scale-adjust` |
+| 全局缩小 | `C-x C-M--` | `global-text-scale-adjust` |
+| 全局重置 | `C-x C-M-0` | `global-text-scale-adjust` |
