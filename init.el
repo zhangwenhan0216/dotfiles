@@ -5,6 +5,8 @@
 ;;; Code:
 
 ;; variables definition
+;; 安装字体： 安装scoop 1. Get-Command scoop -ErrorAction SilentlyContinue 2. Set-ExecutionPolicy RemoteSigned -Scope CurrentUser 3. irm get.scoop.sh | iex
+;; 开始安装字体 1. scoop bucket add nerd-fonts   2. scoop install Maple-Mono-NF-CN
 (defvar cabins-os-win (memq system-type '(ms-dos windows-nt cygwin)))
 (defvar cabins-os-mac (eq system-type 'darwin))
 
