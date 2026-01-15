@@ -36,6 +36,11 @@
 (setq inhibit-startup-screen t)
 (setq initial-scratch-message nil)
 
+;; 设置语言环境防止乱码
+(set-language-environment "UTF-8")
+(set-default-coding-systems 'utf-8)
+
+
 ;;; early-init.el ends here
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars)
