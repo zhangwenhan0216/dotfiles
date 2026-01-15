@@ -275,9 +275,20 @@
 ;;          mingw-w64-ucrt-x86_64-cmake \
 ;;          mingw-w64-ucrt-x86_64-libvterm \
 ;;          mingw-w64-ucrt-x86_64-toolchain
-(use-package vterm
+;; (use-package vterm
+;;   :ensure t
+;;   :bind ("C-c t" . vterm))
+
+;; 主题
+(use-package doom-themes
   :ensure t
-  :bind ("C-c t" . vterm))
+  :config
+  ;; 设置默认主题
+  (load-theme 'doom-one t)
+  ;; 启用该主题的闪烁模式线等增强功能
+  (doom-themes-visual-bell-config))
+
+
 
 (provide 'init-third-packages)
 
