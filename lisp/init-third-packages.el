@@ -24,7 +24,7 @@
     (select-window new-win)))
 
 ;; 绑定到 ace-window 的 'b' 键（覆盖默认的水平分割）
-(setf (alist-get ?b aw-dispatch-alist) '(my-independent-split "Split Independent"))
+(setf (alist-get ?n aw-dispatch-alist) '(my-independent-split "Split Independent"))
 
 ;; company - 自动补全框架 (Complete Anything)
 ;; 在编程模式下提供智能代码补全
@@ -254,6 +254,7 @@
   :when (display-graphic-p)
   :hook (prog-mode . hl-line-mode))
 
+;; git
 (use-package magit
   :ensure t
   :bind ("C-x g" . magit-status) ; 最常用的入口
@@ -282,6 +283,6 @@
   ;; 启用该主题的闪烁模式线等增强功能
   (doom-themes-visual-bell-config))
 
-(provide 'init-third-packages)
 
+(provide 'init-third-packages)
 ;;; init-third-packages.el ends here

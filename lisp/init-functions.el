@@ -95,6 +95,12 @@
     (message "Word copied!")))
 (global-set-key (kbd "C-c w") 'copy-whole-word)
 
+;; 快速打开配置文件目录
+(defun open-conf-dir ()
+  "直接打开 Emacs 配置目录。"
+  (interactive)
+  (dired user-emacs-directory))
+
 (provide 'init-functions)
 
 ;;; init-functions.el ends here
