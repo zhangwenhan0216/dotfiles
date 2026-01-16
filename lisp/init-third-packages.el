@@ -283,6 +283,11 @@
   ;; 启用该主题的闪烁模式线等增强功能
   (doom-themes-visual-bell-config))
 
+;;; Move Text
+(use-package move-text
+  :ensure t)
+(global-set-key (kbd "M-p") 'move-text-up)
+(global-set-key (kbd "M-n") 'move-text-down)
 
 (provide 'init-third-packages)
 ;;; init-third-packages.el ends here
