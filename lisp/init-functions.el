@@ -83,6 +83,18 @@
   (prettify-symbols-mode 1)
   (which-function-mode 1))
 
+;; 复制整个单词
+(defun copy-whole-word ()
+  (interactive)
+  (save-excursion
+    (forward-word 1)
+    (backward-word 1)
+    (let ((b (point)))
+      (forward-word 1)
+      (copy-region-as-kill b (point)))
+    (message "Word copied!")))
+(global-set-key (kbd "C-c w") 'copy-whole-word)
+
 (provide 'init-functions)
 
 ;;; init-functions.el ends here
