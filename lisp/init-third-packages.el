@@ -176,9 +176,7 @@
 ;;   M-n - 跳转到下一个错误
 ;;   M-p - 跳转到上一个错误
 (use-package flymake
-  :hook (prog-mode . flymake-mode)
-  :bind (("M-e n" . #'flymake-goto-next-error)
-	 ("M-e p" . #'flymake-goto-prev-error)))
+  :hook (prog-mode . flymake-mode))
 
 
 ;; eglot - LSP 客户端（Emacs 29+ 内置）
