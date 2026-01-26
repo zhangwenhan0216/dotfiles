@@ -73,5 +73,4 @@
 (defalias 'list-buffers 'ibuffer)
 
 (provide 'init-builtins)
-
 ;;; init-builtins.el ends here

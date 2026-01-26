@@ -16,15 +16,6 @@
   :ensure t
   :config (setq aw-dispatch-always t)) ; 将 M-o 绑定为跳转键，比 C-x o 快得多
 (global-set-key (kbd "M-o") 'ace-window)
-(defun my-independent-split (window)
-  "在选定窗口水平分割，并强制新窗口显示不同 Buffer"
-  (aw-switch-to-window window)
-  (let ((new-win (split-window-horizontally)))
-    (set-window-buffer new-win (other-buffer (current-buffer))) ;; 显示最近的另一个 Buffer
-    (select-window new-win)))
-
-;; 绑定到 ace-window 的 'b' 键（覆盖默认的水平分割）
-(setf (alist-get ?n aw-dispatch-alist) '(my-independent-split "Split Independent"))
 
 ;; company - 自动补全框架 (Complete Anything)
 ;; 在编程模式下提供智能代码补全
@@ -92,19 +83,20 @@
 
 ;; move-dup - 移动和复制行或区域
 ;; 快速调整代码位置，提升编辑效率
-;; 常用快捷键:
-;;   C-M-<up> - 将当前行或选中区域向上移动
-;;   C-M-<down> - 将当前行或选中区域向下移动
-;;   C-M-S-<up> - 复制当前行或选中区域到上方
-;;   C-M-S-<down> - 复制当前行或选中区域到下方
 (use-package move-dup
   :ensure t
+  :bind (("M-p"   . move-dup-move-lines-up)
+         ("C-M-p" . move-dup-duplicate-up)
+         ("M-n"   . move-dup-move-lines-down)
+         ("C-M-n" . move-dup-duplicate-down))
   :hook (after-init . global-move-dup-mode))
 
 ;; markdown-mode - Markdown 文件支持
 ;; 提供 Markdown 语法高亮和编辑功能
 ;; 自动识别 .md 文件，README.md 使用 GitHub 风格 (gfm-mode)
 (use-package markdown-mode
+  :bind ((:map markdown-mode-map ("M-p" . nil))
+	 (:map markdown-mode-map ("M-n" . nil)))
   :ensure t
   :mode (("README\\.md\\'" . gfm-mode)
 	 ("\\.md\\'" . markdown-mode)
@@ -185,8 +177,8 @@
 ;;   M-p - 跳转到上一个错误
 (use-package flymake
   :hook (prog-mode . flymake-mode)
-  :bind (("M-n" . #'flymake-goto-next-error)
-	 ("M-p" . #'flymake-goto-prev-error)))
+  :bind (("M-e n" . #'flymake-goto-next-error)
+	 ("M-e p" . #'flymake-goto-prev-error)))
 
 
 ;; eglot - LSP 客户端（Emacs 29+ 内置）
@@ -282,12 +274,6 @@
   (load-theme 'doom-one t)
   ;; 启用该主题的闪烁模式线等增强功能
   (doom-themes-visual-bell-config))
-
-;;; Move Text
-(use-package move-text
-  :ensure t)
-(global-set-key (kbd "M-p") 'move-text-up)
-(global-set-key (kbd "M-n") 'move-text-down)
 
 (provide 'init-third-packages)
 ;;; init-third-packages.el ends here
