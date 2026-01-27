@@ -4,6 +4,10 @@
 ;;; Commentary: (c) Cabins Kong, 2022-Present
 ;;; Code:
 
+;;; 如果在windows上需要配置环境变量，其实就是配置这个 (expand-file-name "~") 这个表达式的值
+;;; 这样magit查找.gitconfig文件就可以找到了
+;;; HOME -> C:\Users\zwh
+
 ;; variables definition
 (defvar cabins-os-win (memq system-type '(ms-dos windows-nt cygwin)))
 (defvar cabins-os-mac (eq system-type 'darwin))
