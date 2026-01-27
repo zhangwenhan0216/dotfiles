@@ -17,6 +17,8 @@
   :config (setq aw-dispatch-always t)) ; 将 M-o 绑定为跳转键，比 C-x o 快得多
 (global-set-key (kbd "M-o") 'ace-window)
 
+;;; programming
+
 ;; company - 自动补全框架 (Complete Anything)
 ;; 在编程模式下提供智能代码补全
 ;; 常用快捷键:
@@ -31,6 +33,27 @@
 		company-minimum-prefix-length 1
 		company-idle-delay 0.1
 		company-format-margin-function nil))
+
+;; flymake - 语法检查工具
+;; 实时检查代码语法错误，在行尾显示警告/错误信息
+;; 常用快捷键:
+;;   M-n - 跳转到下一个错误
+;;   M-p - 跳转到上一个错误
+(use-package flymake
+  :hook (prog-mode . flymake-mode))
+
+;; format-all - 代码格式化工具
+;; 支持几乎所有编程语言的代码格式化，保存时自动格式化
+;; 常用快捷键:
+;;   C-c f - 手动格式化当前区域或整个缓冲区
+;; 需要确保系统已安装对应语言的格式化工具（如 prettier, black, gofmt 等）
+(use-package format-all :ensure t
+  ;; enable format on save with format-all-mode
+  :hook ((prog-mode . format-all-mode)
+	 (format-all-mode . format-all-ensure-formatter))
+  ;; and bind a shortcut to manual format
+  :commands (format-all-buffer format-all-region-or-buffer format-all-mode)
+  :bind ("C-c f" . #'format-all-region-or-buffer))
 
 ;; multiple-cursors - 多光标编辑
 ;; 类似于 VS Code 的多光标功能，可以同时编辑多处相同的内容
@@ -60,18 +83,6 @@
 	      (daemonp)))
   :init (exec-path-from-shell-initialize))
 
-;; format-all - 代码格式化工具
-;; 支持几乎所有编程语言的代码格式化，保存时自动格式化
-;; 常用快捷键:
-;;   C-c f - 手动格式化当前区域或整个缓冲区
-;; 需要确保系统已安装对应语言的格式化工具（如 prettier, black, gofmt 等）
-(use-package format-all :ensure t
-  ;; enable format on save with format-all-mode
-  :hook ((prog-mode . format-all-mode)
-	 (format-all-mode . format-all-ensure-formatter))
-  ;; and bind a shortcut to manual format
-  :commands (format-all-buffer format-all-region-or-buffer format-all-mode)
-  :bind ("C-c f" . #'format-all-region-or-buffer))
 
 ;; iedit - 批量编辑相同文本
 ;; 选中一个词后，可以同时编辑缓冲区或区域内所有相同的词
@@ -169,15 +180,6 @@
 ;; 为所有编程语言模式提供统一的配置（行号、列号、自动配对等）
 (use-package prog-mode
   :hook ((prog-mode . my/prog-mode-common-setup)))
-
-;; flymake - 语法检查工具
-;; 实时检查代码语法错误，在行尾显示警告/错误信息
-;; 常用快捷键:
-;;   M-n - 跳转到下一个错误
-;;   M-p - 跳转到上一个错误
-(use-package flymake
-  :hook (prog-mode . flymake-mode))
-
 
 ;; eglot - LSP 客户端（Emacs 29+ 内置）
 ;; 提供 Language Server Protocol 支持，实现代码跳转、补全、重构等功能
