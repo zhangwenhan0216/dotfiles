@@ -1,3 +1,4 @@
+https://software.download.prss.microsoft.com/dbazure/Win10_22H2_Chinese_Simplified_x64v1.iso?t=958a6cd4-9504-4cfe-86b2-a3c34250256c&P1=1770127731&P2=601&P3=2&P4=lJ0jnwt6LAxJAH078aQ5lxbOX9rte%2bfDurcg2eG3ieC5ejnNcvA9uJD%2bhPUw2uUdkFmr50f%2fYperSyaIRwPn7ZJ2v0Ti4kNUGjFjVN9iCUukxGKenqSOnc2Bm9NV1sYJ7I8Tn9IV87CvTiJQXNnovvvCXv0XD5ajdRcmYM8aZpU1kwZldt9SxAHYAxPdIiBQ9wmetBqPbKWdhCJbp3n85Z%2bYiJiYjuzmFAwHqw%2fbE4mfHSoyQOfw8MlD3RVGNWHgFrmDHe7QnwLPQz%2fh%2frv8ODqvLwf2XNnJjDgkNR414pGg2Y1DoWhwnu%2fkkbwT%2ffpBwguG%2f3NcPsU5%2fK%2bZOoJ8Pg%3d%3d
 # About
 
 This is `NOT` a part of [GNU Emacs](https://www.gnu.org/software/emacs/) but a personal-daily-use configuration maintained by @ Cabins from China.
