@@ -27,6 +27,36 @@
 ;; pre-settings
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
+;; 配置 MSYS2
+(when (eq system-type 'windows-nt)
+  (let ((msys2-root (getenv "MSYS2_ROOT")))
+    (message "配置加载中: %s" msys2-root)
+    (when msys2-root
+      ;; 设置 Shell
+      (setq explicit-shell-file-name (expand-file-name "usr/bin/bash" msys2-root))
+      (setq shell-file-name explicit-shell-file-name)
+      (setenv "SHELL" shell-file-name)
+
+      ;; 设置 MSYSTEM 环境变量（指定 MinGW64 环境）
+      (setenv "MSYSTEM" "MINGW64")
+
+      ;; 动态添加路径到 exec-path
+      (add-to-list 'exec-path (expand-file-name "mingw64/bin" msys2-root))
+      (add-to-list 'exec-path (expand-file-name "usr/bin" msys2-root))
+      ;; 同时更新 PATH 环境变量（供子进程使用）
+      (setenv "PATH" (concat (expand-file-name "mingw64/bin" msys2-root) ";"
+                             (expand-file-name "usr/bin" msys2-root) ";"
+                             (getenv "PATH"))))
+    ;; 如果没有设置 MSYS2_ROOT，给出警告
+    (unless msys2-root
+      (warn "环境变量 MSYS2_ROOT 未设置，MSYS2 集成功能不可用"))))
+
+;; 解决 Windows 换行符问题（Cygwin/MSYS2）
+(add-hook 'shell-mode-hook
+          (lambda ()
+            (set-buffer-file-coding-system 'undecided-unix)
+            (set-buffer-process-coding-system 'utf-8-unix 'utf-8-unix)))
+
 ;; customized functions
 (require 'init-functions)
 
@@ -35,6 +65,9 @@
 
 ;; third-part packages
 (require 'init-third-packages)
+
+;; org-mode
+(require 'init-org-mode)
 
 ;; custom file settings
 (setq custom-file (locate-user-emacs-file "custom.el"))
