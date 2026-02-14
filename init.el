@@ -1,7 +1,6 @@
 ;;; init.el --- init.el
 
 ;;; Commentary:
-
 ;;; Code:
 
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
@@ -9,7 +8,6 @@
 ;; 启用拼写检查
 (defconst *spell-check-support-enabled* t)
 (defconst *is-a-mac* (eq system-type 'darwin))
-
 
 ;; 调整垃圾回收（GC）阈值以加快启动速度。
 (setq gc-cons-threshold (* 128 1024 1024)) ;; 128 MB
@@ -52,19 +50,19 @@
 
 ;; multiple-cursors - 多光标编辑
 ;; 类似于 VS Code 的多光标功能，可以同时编辑多处相同的内容
-;; 常用快捷键:
-;;   C-S-c C-S-c - 为当前行添加多光标（需先选中多行）
-;;   C-> - 标记下一个与当前光标处相同的词
-;;   C-< - 标记上一个与当前光标处相同的词
-;;   C-c C-< - 标记缓冲区中所有与当前光标处相同的词
-;;   C-" - 跳到下一个相同位置但不标记
-;;   C-: - 跳到上一个相同位置但不标记
 (use-package multiple-cursors
   :ensure t
   :bind (("C-S-c C-S-c" . mc/edit-lines)
 	 ("C->" . mc/mark-next-like-this)
 	 ("C-<" . mc/mark-previous-like-this)))
 
+(require 'init-uniquify)
+(require 'init-ibuffer)
+(require 'init-flymake)
+(require 'init-eglot)
+(require 'init-recentf)
+(require 'init-minibuffer)
+(require 'init-rime)
 
 
 (provide 'init)

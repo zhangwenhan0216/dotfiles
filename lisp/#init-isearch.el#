@@ -16,7 +16,7 @@
   (define-key isearch-mode-map [remap isearch-delete-char] 'isearch-del-char)
 
   (defun sanityinc/isearch-occur ()
-    "Invoke `consult-line' from isearch."
+    "Invoke `consult-line' from isearch. consult "
     (interactive)
     (let ((query (if isearch-regexp
                      isearch-string

@@ -1,0 +1,52 @@
+;;; init-rime.el --- init-rime.el
+
+;;; Commentary:
+;;; Code: 
+
+
+;; 自动安装雾凇拼音
+(defun my/install-rime-ice ()
+  "自动下载并安装雾凇拼音"
+  (interactive)
+  (let ((rime-dir (expand-file-name "rime" user-emacs-directory))
+        (temp-dir (make-temp-file "rime-ice-" t)))
+    
+    ;; 如果已存在，跳过
+    (when (file-directory-p (expand-file-name "rime_ice.schema.yaml" rime-dir))
+      (message "雾凇拼音已安装")
+      (return-from my/install-rime-ice))
+    
+    (message "正在下载雾凇拼音...")
+    
+    ;; 克隆仓库
+    (if (zerop (call-process "git" nil nil nil
+                             "clone" "--depth=1"
+                             "https://github.com/iDvel/rime-ice.git"
+                             temp-dir))
+        (progn
+          ;; 备份旧配置
+          (when (file-directory-p rime-dir)
+            (rename-file rime-dir (format "%s.backup.%s" 
+                                          rime-dir 
+                                          (format-time-string "%Y%m%d"))))
+          
+          ;; 复制到新位置
+          (rename-file temp-dir rime-dir)
+          (message "雾凇拼音安装完成！请执行 M-x rime-deploy"))
+      
+      (message "下载失败，请检查网络"))))
+
+;; 启动时自动检查安装
+(add-hook 'emacs-startup-hook #'my/install-rime-ice)
+
+;; Rime 基础配置
+(use-package rime
+  :ensure t
+  :custom
+  (default-input-method "rime")
+  (rime-user-data-dir (expand-file-name "rime" user-emacs-directory))
+  (rime-show-candidate 'posframe))
+
+(provide 'init-rime)
+
+;;; init-rime.el ends here

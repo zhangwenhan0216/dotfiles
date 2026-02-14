@@ -1,0 +1,59 @@
+;;; init-minibuffer.el --- Config for minibuffer completion       -*- lexical-binding: t; -*-
+;;; Commentary:
+;;; Code:
+
+(use-package vertico
+  :hook (after-init . vertico-mode))
+
+(use-package embark
+  :after vertico
+  :bind (:map vertico-map
+              ("C-c C-o" . embark-export)
+              ("C-c C-c" . embark-act))
+  :config
+  ;; https://github.com/purcell/whole-line-or-region/issues/30#issuecomment-3388095018
+  (push 'embark--mark-target
+        (alist-get 'whole-line-or-region-delete-region
+                   embark-around-action-hooks)))
+
+(use-package consult
+  :after vertico
+  :init
+  (defmacro sanityinc/no-consult-preview (&rest cmds)
+    `(with-eval-after-load 'consult
+       (consult-customize ,@cmds :preview-key "M-P")))
+  :config
+  (sanityinc/no-consult-preview
+   consult-ripgrep
+   consult-git-grep consult-grep
+   consult-bookmark consult-recent-file consult-xref
+   consult-source-recent-file consult-source-project-recent-file consult-source-bookmark)
+
+  (defun sanityinc/consult-ripgrep-at-point (&optional dir initial)
+    (interactive (list current-prefix-arg
+                       (if (use-region-p)
+                           (buffer-substring-no-properties
+                            (region-beginning) (region-end))
+                         (if-let* ((s (symbol-at-point)))
+                             (symbol-name s)))))
+    (consult-ripgrep dir initial))
+  (sanityinc/no-consult-preview sanityinc/consult-ripgrep-at-point)
+
+  (when (executable-find "rg")
+    (global-set-key (kbd "M-?") 'sanityinc/consult-ripgrep-at-point))
+
+  (global-set-key [remap switch-to-buffer] 'consult-buffer)
+  (global-set-key [remap switch-to-buffer-other-window] 'consult-buffer-other-window)
+  (global-set-key [remap switch-to-buffer-other-frame] 'consult-buffer-other-frame)
+  (global-set-key [remap goto-line] 'consult-goto-line))
+
+(use-package embark-consult
+  :after (embark consult))
+
+(use-package marginalia
+  :ensure t
+  :hook (after-init . marginalia-mode))
+
+
+(provide 'init-minibuffer)
+;;; init-minibuffer.el ends here
