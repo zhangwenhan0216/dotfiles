@@ -1,0 +1,15 @@
+;;; init-mmm.el --- Multiple Major Modes support -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Code:
+
+(use-package mmm-mode
+  :ensure t
+  :commands mmm-mode
+  :init
+  (require 'mmm-auto)
+  :custom
+  (mmm-global-mode 'buffers-with-submode-classes)
+  (mmm-submode-decoration-level 2))
+
+(provide 'init-mmm)
+;;; init-mmm.el ends here

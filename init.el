@@ -20,6 +20,7 @@
 
 (setq custom-file (locate-user-emacs-file "custom.el"))
 
+(require 'init-utils)
 (require 'init-package)
 (require 'init-themes)
 (require 'init-exec-path)
@@ -28,7 +29,7 @@
 (use-package diminish
   :ensure t)
 
-;; gc 
+;; gc
 (use-package gcmh
   :ensure t
   :diminish  ; 自动隐藏
@@ -40,29 +41,80 @@
 (require 'init-dired)
 (require 'init-isearch)
 
-;; ace-window - 快速窗口跳转
-;; 当有多个窗口时，按 M-o 后窗口会显示数字编号，按数字键即可跳转
-;; x 删除窗口 v 垂直分割窗口 b 水平分割窗口 c 均匀分割窗口，可以是垂直或水平 m 交换窗口 c 复制窗口
-(use-package ace-window
-  :ensure t
-  :config (setq aw-dispatch-always t)
-  :bind ("M-o" . ace-window)) ; 将 M-o 绑定为跳转键，比 C-x o 快得多
-
-;; multiple-cursors - 多光标编辑
-;; 类似于 VS Code 的多光标功能，可以同时编辑多处相同的内容
-(use-package multiple-cursors
-  :ensure t
-  :bind (("C-S-c C-S-c" . mc/edit-lines)
-	 ("C->" . mc/mark-next-like-this)
-	 ("C-<" . mc/mark-previous-like-this)))
-
 (require 'init-uniquify)
 (require 'init-ibuffer)
 (require 'init-flymake)
 (require 'init-eglot)
-(require 'init-recentf)
-(require 'init-minibuffer)
-(require 'init-rime)
+(require 'init-recentf)       ;
+(require 'init-minibuffer)    ;
+(require 'init-rime)          ; 输入法配置
+(require 'init-hippie-expand) ;
+(require 'init-corfu)         ; 自动补全
+(require 'init-windows)       ; 窗口切换
+(require 'init-sessions)      ; 保存当前会话
+(require 'init-mmm)           ; 在不同的区域使用代码高亮功能
+(require 'init-editing-utils)
+(require 'init-whitespace)
+(require 'init-vc)            ; 版本控制
+(require 'init-git)
+
+(require 'init-projectile)
+(require 'init-compile)
+(require 'init-crontab)
+(require 'init-markdown)
+(require 'init-javascript)
+(require 'init-org)
+(require 'init-html)
+(require 'init-css)
+(require 'init-yaml)
+
+(use-package nginx-mode
+  :ensure t)
+
+(require 'init-docker)
+
+;; rust
+(require 'init-rust)
+
+(require 'init-paredit)
+(require 'init-lisp)
+
+(when *spell-check-support-enabled*
+  (require 'init-spelling))
+
+(require 'init-misc)
+(require 'init-folding)
+(require 'init-terminals)
+
+(use-package sudo-edit
+  :ensure t)
+(use-package dotenv-mode
+  :ensure t)
+(use-package shfmt
+  :ensure t)
+
+(when (fboundp 'global-eldoc-mode)
+  (add-hook 'after-init-hook 'global-eldoc-mode))
+
+(require 'init-direnv)
+
+(when (and (require 'treesit nil t)
+           (fboundp 'treesit-available-p)
+           (treesit-available-p))
+  (require 'init-treesitter))
+
+;; Allow access from emacsclient
+(add-hook 'after-init-hook
+          (lambda ()
+            (require 'server)
+            (unless (server-running-p)
+              (server-start))))
+
+;; Variables configured via the interactive 'customize' interface
+(when (file-exists-p custom-file)
+  (load custom-file))
+
+(require 'init-locales)
 
 
 (provide 'init)

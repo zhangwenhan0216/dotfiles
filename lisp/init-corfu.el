@@ -1,0 +1,40 @@
+;;; init-corfu.el --- Interactive completion in buffers -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Code:
+
+;; WAITING: haskell-mode sets tags-table-list globally, breaks tags-completion-at-point-function
+;; TODO Default sort order should place [a-z] before punctuation
+
+(setq tab-always-indent 'complete)
+
+(use-package orderless
+  :ensure t
+  :after vertico
+  :config
+  (setq completion-styles '(orderless basic)))
+
+(setq completion-category-defaults nil
+      completion-category-overrides nil)
+(setq completion-cycle-threshold 4)
+
+(use-package corfu
+  :when (version< "28.1" emacs-version)
+  :ensure t
+  :custom
+  (corfu-auto t)
+  (corfu-quit-no-match 'separator)
+  :hook
+  (after-init . global-corfu-mode)
+  (eshell-mode . (lambda () (setq-local corfu-auto nil)))
+  :config
+  (corfu-popupinfo-mode))
+
+(use-package corfu-terminal
+  :ensure t
+  :after corfu
+  :config
+  (corfu-terminal-mode))
+
+
+(provide 'init-corfu)
+;;; init-corfu.el ends here
